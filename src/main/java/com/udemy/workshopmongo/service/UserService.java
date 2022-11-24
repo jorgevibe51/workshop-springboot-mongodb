@@ -6,6 +6,7 @@ package com.udemy.workshopmongo.service;
 
 import com.udemy.workshopmongo.domain.User;
 import com.udemy.workshopmongo.repository.UserRepository;
+import com.udemy.workshopmongo.service.exception.ObjectNotFoundException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,5 +23,9 @@ public class UserService {
     
     public List<User> findAll(){
         return repository.findAll();
+    }
+    
+    public User findById(String id){
+        return repository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado."));
     }
 }
