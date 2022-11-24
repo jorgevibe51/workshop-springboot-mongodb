@@ -6,12 +6,16 @@ package com.udemy.workshopmongo.domain;
 
 import java.io.Serializable;
 import java.util.Objects;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  *
  * @author Jorge
  */
+@Document
 public class User implements Serializable{
+    @Id
     private String id;
     private String name;
     private String email;
