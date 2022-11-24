@@ -5,6 +5,7 @@
 package com.udemy.workshopmongo.service;
 
 import com.udemy.workshopmongo.domain.User;
+import com.udemy.workshopmongo.dto.UserDTO;
 import com.udemy.workshopmongo.repository.UserRepository;
 import com.udemy.workshopmongo.service.exception.ObjectNotFoundException;
 import java.util.List;
@@ -27,5 +28,13 @@ public class UserService {
     
     public User findById(String id){
         return repository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado."));
+    }
+    
+    public User insert(User user){
+        return repository.insert(user);
+    }
+    
+    public User fromDTO(UserDTO userDTO){
+        return new User(userDTO.getId(), userDTO.getName(), userDTO.getEmail());
     }
 }
