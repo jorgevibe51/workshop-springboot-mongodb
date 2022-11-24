@@ -5,9 +5,10 @@
 package com.udemy.workshopmongo.resources;
 
 import com.udemy.workshopmongo.domain.User;
+import com.udemy.workshopmongo.dto.UserDTO;
 import com.udemy.workshopmongo.service.UserService;
-import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +27,13 @@ public class UserResouce {
     private UserService service;
     
     @RequestMapping(method = RequestMethod.GET) //out @GetMapping
-    public ResponseEntity<List<User>> findAll(){
-        return ResponseEntity.ok().body(service.findAll());
+    public ResponseEntity<List<UserDTO>> findAll(){
+        //return ResponseEntity.ok().body(service.findAll());
+        return ResponseEntity.ok()
+                .body(
+                        service.findAll().stream()
+                        .map(x -> new UserDTO(x))
+                        .collect(Collectors.toList())
+                );
     }
 }
