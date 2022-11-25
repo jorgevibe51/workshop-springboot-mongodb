@@ -4,6 +4,7 @@
  */
 package com.udemy.workshopmongo.resources;
 
+import com.udemy.workshopmongo.domain.Post;
 import com.udemy.workshopmongo.domain.User;
 import com.udemy.workshopmongo.dto.UserDTO;
 import com.udemy.workshopmongo.service.UserService;
@@ -69,5 +70,11 @@ public class UserResouce {
         userDTO.setId(id);
         service.update(service.fromDTO(userDTO));
         return ResponseEntity.noContent().build();
+    }
+    
+    @RequestMapping(value = "/{id}/posts", method = RequestMethod.GET)
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id){
+        return ResponseEntity.ok()
+                .body(service.findById(id).getPosts());
     }
 }
