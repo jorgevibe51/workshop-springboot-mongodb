@@ -8,9 +8,8 @@ import com.udemy.workshopmongo.domain.Post;
 import com.udemy.workshopmongo.resources.util.URL;
 import com.udemy.workshopmongo.service.PostService;
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,5 +44,23 @@ public class PostResource {
         }
         return ResponseEntity.ok()
                 .body(service.finByTitle(text));
+    }
+    
+     @RequestMapping(value = "/fullsearch", method = RequestMethod.GET)
+    public ResponseEntity<List<Post>> fullSearch(
+            @RequestParam(value="text", defaultValue = "") String text,
+            @RequestParam(value="minDate", defaultValue = "") String minDate,
+            @RequestParam(value="maxDate", defaultValue = "") String maxDate
+            ){
+        try {
+            text = URL.decodeParam(text);
+            Date min = URL.convertDate(minDate, new Date(0L));
+            Date max = URL.convertDate(maxDate, new Date());
+            return ResponseEntity.ok()
+                .body(service.fullSeach(text, min, max));
+
+        } catch (UnsupportedEncodingException ex) {
+            return ResponseEntity.noContent().build();
+        }
     }
 }

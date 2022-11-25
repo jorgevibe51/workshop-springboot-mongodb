@@ -7,6 +7,7 @@ package com.udemy.workshopmongo.service;
 import com.udemy.workshopmongo.domain.Post;
 import com.udemy.workshopmongo.repository.PostRepository;
 import com.udemy.workshopmongo.service.exception.ObjectNotFoundException;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,5 +29,10 @@ public class PostService {
     public List<Post> finByTitle(String text){
         //return repository.findByTitleContainingIgnoreCase(text);
         return repository.searchByTitle(text);
+    }
+    
+    public List<Post> fullSeach(String text, Date minDate, Date maxDate){
+        maxDate = new Date(maxDate.getTime()+24*60*60*1000);
+        return repository.fullSearch(text, minDate, maxDate);
     }
 }
