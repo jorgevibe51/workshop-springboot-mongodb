@@ -7,6 +7,7 @@ package com.udemy.workshopmongo.config;
 import com.udemy.workshopmongo.domain.Post;
 import com.udemy.workshopmongo.domain.User;
 import com.udemy.workshopmongo.dto.AuthorDTO;
+import com.udemy.workshopmongo.dto.CommentDTO;
 import com.udemy.workshopmongo.repository.PostRepository;
 import com.udemy.workshopmongo.repository.UserRepository;
 import java.text.SimpleDateFormat;
@@ -47,6 +48,13 @@ public class Instantiation implements CommandLineRunner {
         
         Post p1 = new Post(null, Instant.now(), "Partiu viagem", "Vou para São Paulo. Abraços!!",new AuthorDTO(u1));
         Post p2 = new Post(null, Instant.now(), "Bom dia", "Acordei feliz hoje!!",new AuthorDTO(u1));
+        
+        CommentDTO c1 = new CommentDTO("Boa viagem mano!", Instant.now(), new AuthorDTO(u2));
+        CommentDTO c2 = new CommentDTO("Aproveite!", Instant.now(), new AuthorDTO(u3));
+        CommentDTO c3 = new CommentDTO("Tenha um ótimo dia!", Instant.now(), new AuthorDTO(u2));
+        
+        p1.getComments().addAll(List.of(c1,c2));
+        p2.getComments().add(c3);
         
         postRepository.saveAll(List.of(p1, p2));
         
