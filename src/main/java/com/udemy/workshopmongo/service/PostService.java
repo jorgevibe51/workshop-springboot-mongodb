@@ -7,6 +7,7 @@ package com.udemy.workshopmongo.service;
 import com.udemy.workshopmongo.domain.Post;
 import com.udemy.workshopmongo.repository.PostRepository;
 import com.udemy.workshopmongo.service.exception.ObjectNotFoundException;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,5 +23,9 @@ public class PostService {
     
     public Post findById(String id){
         return repository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado."));
+    }
+    
+    public List<Post> finByTitle(String text){
+        return repository.findByTitleContainingIgnoreCase(text);
     }
 }
